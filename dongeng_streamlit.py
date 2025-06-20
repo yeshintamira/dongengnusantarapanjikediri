@@ -752,20 +752,6 @@ def main():
                 "LSI", 
                 []  # No keywords for LSI
             )
-        
-        # Display model status
-        st.markdown("---")
-        col1, col2 = st.columns(2)
-        with col2:
-            if lda_model_data is not None:
-                st.success("✅ Model LDA: Tersedia")
-            else:
-                st.error("❌ Model LDA: Tidak tersedia")
-        with col1:
-            if lsi_model_data is not None:
-                st.success("✅ Model LSI: Tersedia")
-            else:
-                st.error("❌ Model LSI: Tidak tersedia")
                 
     else:
         st.error("❌ Tidak ada model yang tersedia. Pastikan file model ada di direktori yang benar:")
