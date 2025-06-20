@@ -7,12 +7,6 @@ import csv
 from gensim.matutils import sparse2full
 from nltk.tokenize import word_tokenize
 from sklearn.metrics.pairwise import cosine_similarity
-import nltk
-
-nltk.download('punkt')
-nltk.download('stopwords')       # kalau pakai stopwords
-nltk.download('wordnet')         # kalau pakai lemmatizer
-nltk.download('omw-1.4')
 
 # Styling function
 def add_styles():
@@ -773,4 +767,9 @@ def main():
         st.info("💡 Jika Anda menjalankan ini secara lokal, pastikan Anda telah menjalankan script pelatihan model terlebih dahulu")
 
 if __name__ == "__main__":
+    import nltk
+    nltk.download('punkt')
+    nltk.download('stopwords')
+    nltk.download('wordnet')
+    nltk.download('omw-1.4')
     main()
