@@ -802,3 +802,62 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+        with col2:
+            lda_clicked = st.button("🔍 Cari dengan LDA", 
+                                  key="lda_button", 
+                                  type="primary", 
+                                  use_container_width=True,
+                                  disabled=(lda_model_data is None))
+        
+        # Handle LSI search
+        if lsi_clicked:
+            if query.strip():
+                if lsi_model_data is not None:
+                    with st.spinner("🔍 Mencari dongeng dengan LSI..."):
+                        lsi_results = recommend_with_lsi(query, lsi_model_data)
+                        st.session_state['search_results_lsi'] = lsi_results
+                        st.session_state['search_results_lda'] = []  # Clear LDA results
+                        st.session_state['current_keywords'] = []  # No keywords for LSI
+                else:
+                    st.error("❌ Model LSI tidak tersedia.")
+            else:
+                st.warning("⚠️ Mohon masukkan kata kunci pencarian terlebih dahulu.")
+        
+        # Handle LDA search
+        if lda_clicked:
+            if query.strip():
+                if lda_model_data is not None:
+                    with st.spinner("🔍 Mencari dongeng dengan LDA..."):
+                        # Extract keywords untuk highlighting (hanya untuk LDA)
+                        search_keywords = extract_search_keywords(query)
+                        
+                        lda_results = recommend_with_lda(query, lda_model_data)
+                        st.session_state['search_results_lda'] = lda_results
+                        st.session_state['search_results_lsi'] = []  # Clear LSI results
+                        st.session_state['current_keywords'] = search_keywords
+                else:
+                    st.error("❌ Model LDA tidak tersedia.")
+            else:
+                st.warning("⚠️ Mohon masukkan kata kunci pencarian terlebih dahulu.")
+        
+        # Tampilkan hasil pencarian
+        if st.session_state.get('search_results_lda', []):
+            display_results(
+                st.session_state['search_results_lda'], 
+                "LDA", 
+                st.session_state.get('current_keywords', [])
+            )
+        elif st.session_state.get('search_results_lsi', []):
+            display_results(
+                st.session_state['search_results_lsi'], 
+                "LSI", 
+                []  # No keywords for LSI
+            )
+                
+    else:
+        st.error("❌ Tidak ada model yang tersedia. Pastikan file model ada di direktori yang benar:")
+        st.info("💡 Jika Anda menjalankan ini secara lokal, pastikan Anda telah menjalankan script pelatihan model terlebih dahulu")
+
+if __name__ == "__main__":
+    main()
