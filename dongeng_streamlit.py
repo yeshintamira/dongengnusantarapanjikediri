@@ -10,6 +10,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import streamlit as st
 import nltk
 from nltk.tokenize import word_tokenize
+from nltk.data import find  # Import find function from nltk.data
 
 # Initialize NLTK resources with caching
 @st.cache_resource
@@ -32,6 +33,7 @@ def setup_nltk():
 # Panggil fungsi setup di awal
 if not setup_nltk():
     st.stop()  # Hentikan aplikasi jika NLTK gagal diinisialisasi
+
 # Styling function
 def add_styles():
     st.markdown(
