@@ -235,52 +235,48 @@ def add_styles():
     line-height: 1.8;
     text-align: justify;
     
-    /* Layout dengan padding simetris */
+    /* Layout */
     margin-top: -10px;
     max-height: 60vh;
     overflow-y: auto;
-    padding: 0 20px; /* Jarak kiri-kanan sama */
-    box-sizing: border-box;
     
-    /* Scrollbar styling */
-    scrollbar-gutter: stable; /* Ruang khusus scrollbar */
-    -webkit-overflow-scrolling: touch;
-    scrollbar-color: #1a3e72 #f1f1f1;
+    /* Scrollbar styling for all devices */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling iOS */
+    scrollbar-color: #1a3e72 #f1f1f1; /* Warna biru untuk Firefox mobile/desktop */
 }
 
-/* Scrollbar styling */
+/* Scrollbar styling for WebKit browsers (Chrome, Safari, Edge) */
 .modal-story::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
 }
 
 .modal-story::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 10px;
-    margin: 5px 0;
 }
 
 .modal-story::-webkit-scrollbar-thumb {
     background: #1a3e72;
     border-radius: 10px;
-    border: 2px solid rgba(241, 241, 241, 0.5);
-    background-clip: content-box;
 }
 
-/* Mobile adjustments */
+/* Mobile-specific adjustments */
 @media (hover: none) and (pointer: coarse) {
+    /* Target perangkat touchscreen (mobile) */
     .modal-story {
-        padding: 0 15px; /* Sedikit lebih rapat di mobile */
-        scrollbar-width: thin;
+        scrollbar-width: thin; /* Untuk Firefox mobile */
+        scrollbar-color: #1a3e72 #f1f1f1; /* Warna biru di Firefox mobile */
     }
     
     .modal-story::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+        width: 6px; /* Lebih tipis di mobile */
+        height: 6px;
     }
     
-    .modal-story::-webkit-scrollbar-thumb {
-        border: 1px solid rgba(241, 241, 241, 0.5);
+    /* Tambahkan ini untuk memastikan scrollbar terlihat di iOS */
+    .modal-story {
+        -webkit-appearance: none;
     }
 
         /* Style untuk close button di modal */
