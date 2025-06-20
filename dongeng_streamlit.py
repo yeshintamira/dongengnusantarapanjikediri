@@ -8,6 +8,31 @@ from gensim.matutils import sparse2full
 from nltk.tokenize import word_tokenize
 from sklearn.metrics.pairwise import cosine_similarity
 
+# Download NLTK data at the very beginning, before any other imports or functions
+import nltk
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
+    
+try:
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    nltk.download('stopwords')
+    
+try:
+    nltk.data.find('corpora/wordnet')
+except LookupError:
+    nltk.download('wordnet')
+    
+try:
+    nltk.data.find('corpora/omw-1.4')
+except LookupError:
+    nltk.download('omw-1.4')
+
+# Now import word_tokenize after ensuring punkt is downloaded
+from nltk.tokenize import word_tokenize
+
 # Styling function
 def add_styles():
     st.markdown(
