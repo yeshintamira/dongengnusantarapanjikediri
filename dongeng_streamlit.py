@@ -228,7 +228,7 @@ def add_styles():
             border-bottom: 2px solid #1a3e72;
             padding-bottom: 10px;
         }
-      .modal-story {
+    .modal-story {
     /* Text styling */
     color: #333333;
     font-size: 1.0em;
@@ -240,28 +240,34 @@ def add_styles():
     max-height: 60vh;
     overflow-y: auto;
     
-    /* Scrollbar for modern browsers */
-    scrollbar-width: thin;
+    /* Scrollbar styling for Firefox */
+    scrollbar-width: auto; /* 'auto' untuk scrollbar lebih lebar dari 'thin' */
+    scrollbar-color: #1a3e72 #f1f1f1; /* thumb biru, track abu-abu */
 }
 
 /* Scrollbar styling for WebKit browsers (Chrome, Safari, Edge) */
 .modal-story::-webkit-scrollbar {
-    width: 8px;
+    width: 12px; /* Lebarkan scrollbar (default 8px) */
+    height: 12px; /* Untuk scrollbar horizontal (jika ada) */
 }
 
 .modal-story::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 10px;
+    margin: 4px; /* Beri jarak dari tepi */
 }
 
 .modal-story::-webkit-scrollbar-thumb {
     background: #1a3e72;
     border-radius: 10px;
+    border: 3px solid #f1f1f1; /* Tambahkan border untuk efek lebih tebal */
 }
 
 .modal-story::-webkit-scrollbar-thumb:hover {
     background: #0d2b57;
+    border: 2px solid #f1f1f1;
 }
+
         /* Style untuk close button di modal */
         .close-button {
             background-color: #dc3545 !important;
