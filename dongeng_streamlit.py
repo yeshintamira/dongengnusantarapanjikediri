@@ -240,12 +240,11 @@ def add_styles():
     max-height: 60vh;
     overflow-y: auto;
     
-    /* Scrollbar styling for all devices */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling iOS */
-    scrollbar-color: #1a3e72 #f1f1f1; /* Warna biru untuk Firefox mobile/desktop */
+    /* Scrollbar styling */
+    scrollbar-color: #1a3e72 #f1f1f1; /* Untuk Firefox */
 }
 
-/* Scrollbar styling for WebKit browsers (Chrome, Safari, Edge) */
+/* WebKit Scrollbar (Chrome, Safari, Edge) */
 .modal-story::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -261,22 +260,20 @@ def add_styles():
     border-radius: 10px;
 }
 
-/* Mobile-specific adjustments */
-@media (hover: none) and (pointer: coarse) {
-    /* Target perangkat touchscreen (mobile) */
+/* Solusi Khusus untuk iOS Safari */
+@supports (-webkit-touch-callout: none) {
     .modal-story {
-        scrollbar-width: thin; /* Untuk Firefox mobile */
-        scrollbar-color: #1a3e72 #f1f1f1; /* Warna biru di Firefox mobile */
+        /* Trick untuk memaksa scrollbar custom di iOS */
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
     }
     
     .modal-story::-webkit-scrollbar {
-        width: 6px; /* Lebih tipis di mobile */
-        height: 6px;
+        -webkit-appearance: none;
     }
     
-    /* Tambahkan ini untuk memastikan scrollbar terlihat di iOS */
-    .modal-story {
-        -webkit-appearance: none;
+    .modal-story::-webkit-scrollbar-thumb {
+        background: #1a3e72 !important;
     }
 
         /* Style untuk close button di modal */
