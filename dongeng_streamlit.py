@@ -537,19 +537,22 @@ def recommend_with_lsi(user_input, model_data):
             similarity_score = similarities[idx]
             
             if similarity_score >= min_similarity:
-                # Get document info
-                content = model_data['documents'][idx]
-                file_name = model_data['file_names'][idx]
-                title = model_data.get('titles', [file_name.replace('_', ' ').title()])[idx] if idx < len(model_data.get('titles', [])) else file_name.replace('_', ' ').title()
-                
-                results.append({
-                    'title': title,
-                    'content': content,
-                    'file_name': file_name,
-                    'score': similarity_score,
-                    'index': idx
-                })
-        
+         
+            content = model_data['data_test'][idx]
+            file_name = os.path.splitext(os.path.basename(model_data['file_paths_test'][idx]))[0]
+            
+            # Gunakan nama file sebagai judul jika tidak ada judul eksplisit
+            title = file_name.replace('_', ' ').title()
+            
+            results.append({
+                'title': title,
+                'content': content,
+                'file_name': file_name,
+                'score': combined_score,
+                'topic_sim': topic_sim,
+                'keyword_sim': keyword_sim,
+                'index': idx
+            })
         return results[:5]  # Return top 5
         
     except Exception as e:
