@@ -5,27 +5,8 @@ import os
 import re
 import csv
 from gensim.matutils import sparse2full
-import nltk
 from nltk.tokenize import word_tokenize
 from sklearn.metrics.pairwise import cosine_similarity
-
-@st.cache_resource
-def download_nltk_data():
-    """Download data NLTK dengan caching untuk menghindari download berulang"""
-    try:
-        # Download required NLTK data
-        nltk.download('punkt', quiet=True)
-        nltk.download('punkt_tab', quiet=True)
-        nltk.download('stopwords', quiet=True)
-        
-        print("NLTK data downloaded successfully")
-        return True
-    except Exception as e:
-        print(f"Error downloading NLTK data: {e}")
-        return False
-
-# Panggil fungsi ini di awal aplikasi
-download_nltk_data()
 
 # Styling function
 def add_styles():
@@ -284,6 +265,14 @@ def load_lda_model():
             try:
                 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
                 from nltk.corpus import stopwords
+                import nltk
+                
+                # Download NLTK data jika belum ada
+                try:
+                    stopwords.words('indonesian')
+                except LookupError:
+                    nltk.download('stopwords')
+                    nltk.download('punkt')
                 
                 # Load stopwords
                 stop_words_nltk = set(stopwords.words('indonesian'))
@@ -309,7 +298,7 @@ def load_lda_model():
         return model_data
         
     except FileNotFoundError:
-        st.error("File model LDA tidak ditemukan. Pastikan file 'lda.joblib' ada di folder 'model/'")
+        st.error("File model LDA tidak ditemukan. Pastikan file 'lda.joblib' ada di folder 'model_lda/'")
         return None
     except Exception as e:
         st.error(f"Terjadi kesalahan saat memuat model LDA: {str(e)}")
@@ -330,22 +319,11 @@ def load_lsi_model():
         return model_data
         
     except FileNotFoundError:
-        st.error("File model LSI tidak ditemukan. Pastikan file 'lsi_model.joblib' ada di folder 'model/'.")
+        st.error("File model LSI tidak ditemukan. Pastikan file 'lsi_model.joblib' ada di direktori yang sama.")
         return None
     except Exception as e:
         st.error(f"Terjadi kesalahan saat memuat model LSI: {str(e)}")
         return None
-
-def safe_tokenize(text):
-    """Safe tokenization with fallback for NLTK issues"""
-    try:
-        return word_tokenize(text)
-    except LookupError:
-        # Fallback to simple split if NLTK punkt is not available
-        return text.split()
-    except Exception as e:
-        print(f"Tokenization error: {e}")
-        return text.split()
 
 def preprocess_text(text, model_data):
     """Preprocess text for LDA model"""
@@ -353,7 +331,7 @@ def preprocess_text(text, model_data):
         return []
     text = text.lower()
     text = re.sub(r'[^a-z\s]', ' ', text)
-    tokens = safe_tokenize(text)
+    tokens = word_tokenize(text)
     filtered_tokens = [w for w in tokens if w not in model_data['stop_words'] and len(w) > 2]
     stemmed_tokens = [model_data['stemmer'].stem(w) for w in filtered_tokens]
     return stemmed_tokens
@@ -362,7 +340,7 @@ def preprocess_user_input(text, model_data):
     """Preprocess user input for LDA model"""
     tokens = preprocess_text(text, model_data)
     if not tokens:
-        simplified_tokens = [w.lower() for w in safe_tokenize(text) if len(w) > 1 and w.isalpha()]
+        simplified_tokens = [w.lower() for w in word_tokenize(text) if len(w) > 1 and w.isalpha()]
         tokens = simplified_tokens
     weighted_tokens = []
     for token in tokens:
@@ -375,7 +353,7 @@ def preprocess_lsi_query(text):
     # Basic preprocessing for LSI
     text = text.lower()
     text = re.sub(r'[^a-z\s]', ' ', text)
-    tokens = safe_tokenize(text)
+    tokens = word_tokenize(text)
     # Filter tokens with length > 2
     filtered_tokens = [w for w in tokens if len(w) > 2]
     return ' '.join(filtered_tokens)
@@ -383,7 +361,7 @@ def preprocess_lsi_query(text):
 def extract_search_keywords(user_input):
     """Ekstrak kata kunci untuk highlighting dari input user"""
     # Tokenize dan bersihkan input
-    words = safe_tokenize(user_input.lower())
+    words = word_tokenize(user_input.lower())
     # Filter kata-kata yang panjangnya > 2 dan hanya huruf
     keywords = [word for word in words if len(word) > 2 and word.isalpha()]
     return keywords
@@ -478,13 +456,13 @@ def recommend_with_lda(user_input, model_data):
     results = []
     min_similarity = 0.05
     
-     for idx, doc_tokens in enumerate(model_data['preprocessed_test']):
+    for idx, doc_tokens in enumerate(model_data['preprocessed_test']):
         doc_bow = model_data['dictionary'].doc2bow(doc_tokens)
         if len(doc_bow) > 0:
             # Langsung menggunakan LDA dengan BOW
             doc_topics = model_data['lda_model'][doc_bow]
             doc_topics_vec = sparse2full(doc_topics, model_data['lda_model'].num_topics)
-            topic_sim = cosine_similarity(topic_dist_vec, doc_topics_vec)
+            topic_sim = cosine_similarity_manual(topic_dist_vec, doc_topics_vec)
         else:
             topic_sim = 0.0
         
@@ -507,7 +485,7 @@ def recommend_with_lda(user_input, model_data):
                 'keyword_sim': keyword_sim,
                 'index': idx
             })
-            
+    
     return sorted(results, key=lambda x: x['score'], reverse=True)[:5]
 
 def recommend_with_lsi(user_input, model_data):
@@ -541,22 +519,19 @@ def recommend_with_lsi(user_input, model_data):
             similarity_score = similarities[idx]
             
             if similarity_score >= min_similarity:
-         
-            content = model_data['data_test'][idx]
-            file_name = os.path.splitext(os.path.basename(model_data['file_paths_test'][idx]))[0]
-            
-            # Gunakan nama file sebagai judul jika tidak ada judul eksplisit
-            title = file_name.replace('_', ' ').title()
-            
-            results.append({
-                'title': title,
-                'content': content,
-                'file_name': file_name,
-                'score': combined_score,
-                'topic_sim': topic_sim,
-                'keyword_sim': keyword_sim,
-                'index': idx
-            })
+                # Get document info
+                content = model_data['documents'][idx]
+                file_name = model_data['file_names'][idx]
+                title = model_data.get('titles', [file_name.replace('_', ' ').title()])[idx] if idx < len(model_data.get('titles', [])) else file_name.replace('_', ' ').title()
+                
+                results.append({
+                    'title': title,
+                    'content': content,
+                    'file_name': file_name,
+                    'score': similarity_score,
+                    'index': idx
+                })
+        
         return results[:5]  # Return top 5
         
     except Exception as e:
@@ -665,6 +640,7 @@ def main():
         st.session_state['search_keywords'] = []
     
     add_styles()
+    
     st.markdown(
         """
         <div class="title-box">
