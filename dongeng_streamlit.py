@@ -228,8 +228,8 @@ def add_styles():
             border-bottom: 2px solid #1a3e72;
             padding-bottom: 10px;
         }
-        
-        } .modal-story {
+
+} .modal-story {
             color: #333333;
             font-size: 1.0em;
             line-height: 1.8;
@@ -238,20 +238,23 @@ def add_styles():
             max-height: 60vh;
             overflow-y: auto;
             white-space: pre-line;
+            max-height: 60vh;
+            padding-right: 10px;  /* Beri ruang untuk scrollbar */
+            scrollbar-width: thin;  /* Untuk browser modern */
         }
         
-        /* Style scrollbar untuk modal */
-        .modal-story::-webkit-scrollbar {
-            width: 8px;
-        }
-        .modal-story::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-        .modal-story::-webkit-scrollbar-thumb {
-            background: #1a3e72;
-            border-radius: 10px;
-        }
+       /* Scrollbar untuk WebKit (Chrome, Safari) */
+.modal-story::-webkit-scrollbar {
+    width: 8px;
+}
+.modal-story::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+.modal-story::-webkit-scrollbar-thumb {
+    background: #1a3e72;
+    border-radius: 10px;
+    
         .modal-story::-webkit-scrollbar-thumb:hover {
             background: #0d2b57;
         }
