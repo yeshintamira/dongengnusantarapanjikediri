@@ -478,13 +478,13 @@ def recommend_with_lda(user_input, model_data):
     results = []
     min_similarity = 0.05
     
-    for idx, doc_tokens in enumerate(model_data['preprocessed_test']):
+     for idx, doc_tokens in enumerate(model_data['preprocessed_test']):
         doc_bow = model_data['dictionary'].doc2bow(doc_tokens)
         if len(doc_bow) > 0:
             # Langsung menggunakan LDA dengan BOW
             doc_topics = model_data['lda_model'][doc_bow]
             doc_topics_vec = sparse2full(doc_topics, model_data['lda_model'].num_topics)
-            topic_sim = cosine_similarity_manual(topic_dist_vec, doc_topics_vec)
+            topic_sim = cosine_similarity(topic_dist_vec, doc_topics_vec)
         else:
             topic_sim = 0.0
         
@@ -507,6 +507,7 @@ def recommend_with_lda(user_input, model_data):
                 'keyword_sim': keyword_sim,
                 'index': idx
             })
+            
     return sorted(results, key=lambda x: x['score'], reverse=True)[:5]
 
 def recommend_with_lsi(user_input, model_data):
