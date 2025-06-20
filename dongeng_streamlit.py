@@ -219,68 +219,169 @@ def add_styles():
             overflow-y: auto;
             border: 2px solid #1a3e72;
         }
-        .modal-title {
-            color: #1a3e72;
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-align: center;
-            border-bottom: 2px solid #1a3e72;
-            padding-bottom: 10px;
-        }
+      /* Modal Title */
+.modal-title {
+    color: #1a3e72;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+    border-bottom: 2px solid #1a3e72;
+    padding-bottom: 10px;
+}
 
-        /* Scrollbar untuk WebKit (Chrome, Safari) */
-           .modal-story::-webkit-scrollbar {
-            width: 8px;
-        }
-        .modal-story::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 10px;
-        }
-        .modal-story::-webkit-scrollbar-thumb {
-        background: #1a3e72;
-        border-radius: 10px;
-        } .modal-story {
-            color: #333333;
-            font-size: 1.0em;
-            line-height: 1.8;
-            text-align: justify;
-            margin-top: -10px;
-            max-height: 60vh;
-            overflow-y: auto;
-            white-space: pre-line;
-        }
-        
-        /* Style scrollbar untuk modal */
-        .modal-story::-webkit-scrollbar {
-            width: 8px;
-        }
-        .modal-story::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-        .modal-story::-webkit-scrollbar-thumb {
-            background: #1a3e72;
-            border-radius: 10px;
-        }
-        .modal-story::-webkit-scrollbar-thumb:hover {
-            background: #0d2b57;
-        }
-        
-        /* Style untuk close button di modal */
-        .close-button {
-            background-color: #dc3545 !important;
-            color: white !important;
-            border: none !important;
-            border-radius: 8px !important;
-            padding: 10px 20px !important;
-            font-size: 1.0em !important;
-            margin-top: 20px !important;
-            width: 100% !important;
-        }
-        .close-button:hover {
-            background-color: #c82333 !important;
-        }
+/* Modal Story Content */
+.modal-story {
+    color: #333333;
+    font-size: 1.0em;
+    line-height: 1.8;
+    text-align: justify;
+    margin-top: -10px;
+    max-height: 60vh;
+    overflow-y: auto;
+    white-space: pre-line;
+    padding-right: 10px; /* Space for scrollbar */
+}
+
+/* Scrollbar untuk WebKit (Chrome, Safari) */
+.modal-story::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-story::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.modal-story::-webkit-scrollbar-thumb {
+    background: #1a3e72;
+    border-radius: 10px;
+}
+
+.modal-story::-webkit-scrollbar-thumb:hover {
+    background: #0d2b57;
+}
+
+/* Close Button */
+.close-button {
+    background-color: #dc3545 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 10px 20px !important;
+    font-size: 1.0em !important;
+    margin-top: 20px !important;
+    width: 100% !important;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.close-button:hover {
+    background-color: #c82333 !important;
+}
+
+/* Modal Container - Responsive */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+/* Responsif untuk Mobile */
+@media screen and (max-width: 768px) {
+    .modal {
+        padding: 10px;
+        align-items: flex-start;
+        padding-top: 5vh;
+    }
+    
+    .modal-content {
+        max-height: 85vh;
+        padding: 15px;
+        border-radius: 8px;
+    }
+    
+    .modal-title {
+        font-size: 1.3em;
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+    }
+    
+    .modal-story {
+        font-size: 0.95em;
+        line-height: 1.6;
+        max-height: 55vh;
+        padding-right: 8px;
+    }
+    
+    .close-button {
+        padding: 12px 20px !important;
+        font-size: 1.1em !important;
+        margin-top: 15px !important;
+    }
+}
+
+/* Untuk layar sangat kecil */
+@media screen and (max-width: 480px) {
+    .modal {
+        padding: 5px;
+        padding-top: 3vh;
+    }
+    
+    .modal-content {
+        max-height: 90vh;
+        padding: 12px;
+        border-radius: 6px;
+    }
+    
+    .modal-title {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+        padding-bottom: 6px;
+    }
+    
+    .modal-story {
+        font-size: 0.9em;
+        line-height: 1.5;
+        max-height: 60vh;
+        text-align: left;
+    }
+    
+    /* Scrollbar lebih kecil untuk mobile */
+    .modal-story::-webkit-scrollbar {
+        width: 6px;
+    }
+}
+
+/* Touch-friendly scrolling untuk mobile */
+@media (pointer: coarse) {
+    .modal-story {
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: #1a3e72 #f1f1f1;
+    }
+}
         </style>
         """,
         unsafe_allow_html=True,
