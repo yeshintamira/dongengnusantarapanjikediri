@@ -8,6 +8,11 @@ from gensim.matutils import sparse2full
 from nltk.tokenize import word_tokenize
 from sklearn.metrics.pairwise import cosine_similarity
 
+import nltk
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
+
 # Styling function
 def add_styles():
     st.markdown(
