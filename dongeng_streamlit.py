@@ -50,7 +50,7 @@ def add_styles():
             font-family: 'Arial', sans-serif; 
         }
         .subtitle {
-            font-size: 30px;          
+            font-size: 5px;          
             color: #000000;          
             margin-top: 10px;         
             font-weight: normal;       
