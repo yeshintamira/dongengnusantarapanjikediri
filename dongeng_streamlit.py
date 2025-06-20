@@ -1,8 +1,7 @@
 import streamlit as st
 st.set_page_config(
     page_title="Portal Dongeng Nusantara",
-    page_icon="📚",
-    layout="wide"
+    page_icon="📚"
 )
 import joblib
 import numpy as np
