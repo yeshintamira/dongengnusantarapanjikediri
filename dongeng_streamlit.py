@@ -1,3 +1,86 @@
+New chat
+Today
+Perbaikan Scrollbar Modal Cerita Lengkap
+Ikon Scroll Cerita Lengkap Tidak Muncul
+NLTK Resource punkt_tab Not Found Error
+Hapus Status Model LSI dan LDA
+Modifikasi kode untuk tampilan judul dongeng
+Building LSI Document Search System
+Error Model LSI: IDF Vector Not Fitted
+Solving LSI Vectorizer Training Issue in Models
+Error: IDF Vector Not Fitted in LSI Model
+30 Days
+import streamlit as st import jo
+Styling Kotak Pencarian di Streamlit
+Custom CSS for Streamlit Search Buttons
+Membuat Tombol Baca Cerita Lengkap
+Tombol Baca Lengkap Tidak Memanjang
+Tombol Baca Cerita Lengkap Tidak Berfungsi
+Tombol Baca Cerita Lengkap Tidak Berfungsi
+import streamlit as st import jo
+Fix Duplicate Widget Key Error in Streamlit
+Fix Duplicate Widget Key Error in Streamlit
+Fixing Duplicate Widget Key in Streamlit
+Sistem Rekomendasi Dongeng dengan LDA
+Remove TF-IDF for LDA Recommendation
+Simpan dan Muat Model LDA dengan Joblib
+Analisis Silhouette Score untuk Jumlah Topik
+Mengubah Coherence Score ke Silhouette Score
+Modify Silhouette Score for Specific Topics
+Silhouette Score untuk LDA dan Evaluasinya
+Sistem Rekomendasi Dongeng Berbasis Topik
+Fairy Tale Recommendation via Topic Modeling
+Skor Relevansi Tanpa Cosine Similarity
+Menghapus TF-IDF dan menggunakan LDA saja
+Hapus Cosine Similarity, Sistem Rekomendasi Daring
+import streamlit as st import pa
+Penggunaan train-test split dengan library sklearn
+Library dan Proses Training Testing LDA
+Penggunaan if __name__ == "__main__" di Python
+Library dan Proses Pemodelan LDA
+Preprocessing Teks dengan Library Python
+rd untuk sistem pencarian dongen
+Sapaan dan Tawaran Bantuan Hangat
+Saving Gensim Dictionary and Corpus Format
+Streamlit UI for Fairy Tale Recommendation
+Streamlit UI untuk Rekomendasi Dongeng
+Fitur Menyalin Format Teks Lain
+Fitur Remove Background pada Picture Format
+Mengubah Kode ke Aplikasi Streamlit
+import pandas as pd import os im
+Menyimpan dan Menggunakan Model di Streamlit
+Komponen bagan untuk mengidentifikasi seri data
+Cara Deploy Aplikasi Streamlit dengan Bahasa Indonesia
+Streamlit Button Click Issue Solution
+Membuat Warning Warna Merah di Streamlit
+Adding Story Button in Result Box
+User Greets Assistant with Friendly Wave
+User Greets with LOLCODE Greeting
+Streamlit LDA Results in Column 2
+Saving Separate Model Components in Folder
+import pandas as pd import os im
+Modifikasi Sistem Rekomendasi Dongeng Populer
+Penggunaan Warna Merah dalam Kode Streamlit
+Buat Search Box Sederhana dengan Streamlit
+Ubah Warna Merah Biru di Streamlit
+import streamlit as st import os
+Fixing Button Search in Streamlit App
+Streamlit UI for Text Search System
+HALO含义及用途全面解析
+Simpan dan Muat Model LDA Rekomendasi
+Kendala Respon Chat Lambat Diterangkan
+import pandas as pd import os im
+import pandas as pd import os im
+import pandas as pd import os im
+import pandas as pd import os im
+Menyimpan dan Memuat Model LDA Gensim
+2025-05
+Kisah Putri dan Kasih Sayang yang Tidak Adil
+Modul Pengumpulan Dataset Dongeng Online
+Halo, Kenalan dan Bicara Seru
+Get App
+
+Perbaikan Scrollbar Modal Cerita Lengkap
 import streamlit as st
 st.set_page_config(
     page_title="Dongeng Nusantara Panji Kediri",
@@ -228,15 +311,11 @@ def add_styles():
             border-bottom: 2px solid #1a3e72;
             padding-bottom: 10px;
         }
-      .modal-story {
+       .modal-story {
     max-height: 60vh;
     overflow-y: auto;
-    padding-right: 10px;
-    color: #333333;
-    font-size: 1.0em;
-    line-height: 1.8;
-    text-align: justify;
-    white-space: pre-line;
+    padding-right: 10px;  /* Beri ruang untuk scrollbar */
+    scrollbar-width: thin;  /* Untuk browser modern */
 }
 
 /* Scrollbar untuk WebKit (Chrome, Safari) */
@@ -250,10 +329,29 @@ def add_styles():
 .modal-story::-webkit-scrollbar-thumb {
     background: #1a3e72;
     border-radius: 10px;
-}
-.modal-story::-webkit-scrollbar-thumb:hover {
-    background: #0d2b57;
-}
+} .modal-story {
+            color: #333333;
+            font-size: 1.0em;
+            line-height: 1.8;
+            text-align: justify;
+            margin-top: -10px;
+            max-height: 60vh;
+            overflow-y: auto;
+            white-space: pre-line;
+        }
+        
+        /* Style scrollbar untuk modal */
+        .modal-story::-webkit-scrollbar {
+            width: 8px;
+        }
+        .modal-story::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .modal-story::-webkit-scrollbar-thumb {
+            background: #1a3e72;
+            border-radius: 10px;
+        }
         .modal-story::-webkit-scrollbar-thumb:hover {
             background: #0d2b57;
         }
@@ -587,13 +685,8 @@ def show_full_story_modal(title, content, file_name, keywords=None):
             <div style="text-align: center; margin-bottom: 15px; color: #666;">
                 📁 File: {file_name}
             </div>
-            <div class="modal-story">
+          <div class="modal-story" style="max-height: 300px; overflow-y: scroll;">
                 {formatted_story}
-            </div>
-            <div style="margin-top: 20px;">
-                <button class="close-button" onclick="window.parent.document.querySelector('.stButton button').click()">
-                    ❌ Tutup Cerita
-                </button>
             </div>
         </div>
         """,
