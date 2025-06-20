@@ -459,7 +459,6 @@ def recommend_with_lda(user_input, model_data):
     for idx, doc_tokens in enumerate(model_data['preprocessed_test']):
         doc_bow = model_data['dictionary'].doc2bow(doc_tokens)
         if len(doc_bow) > 0:
-            # Langsung menggunakan LDA dengan BOW
             doc_topics = model_data['lda_model'][doc_bow]
             doc_topics_vec = sparse2full(doc_topics, model_data['lda_model'].num_topics)
             topic_sim = cosine_similarity_manual(topic_dist_vec, doc_topics_vec)
@@ -473,18 +472,20 @@ def recommend_with_lda(user_input, model_data):
             content = model_data['data_test'][idx]
             full_path = model_data['file_paths_test'][idx]
             
-            # Ekstrak hanya nama file tanpa path folder
+            # **PERUBAHAN UTAMA DI SINI**
+            # 1. Ambil nama file saja (tanpa path folder)
             file_name = os.path.basename(full_path)
-            # Hapus ekstensi
+            
+            # 2. Hapus ekstensi (.txt, .doc, dll)
             file_name = os.path.splitext(file_name)[0]
             
-            # Format judul (tanpa path folder)
+            # 3. Bersihkan dari karakter "_" dan format judul
             title = file_name.replace('_', ' ').title()
             
             results.append({
-                'title': title,
+                'title': title,  # Judul sudah bersih
                 'content': content,
-                'file_name': file_name,  # Tetap simpan nama file untuk ditampilkan
+                'file_name': file_name,  # Nama file tanpa path
                 'score': combined_score,
                 'topic_sim': topic_sim,
                 'keyword_sim': keyword_sim,
