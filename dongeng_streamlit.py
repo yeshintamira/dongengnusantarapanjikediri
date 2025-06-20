@@ -9,30 +9,25 @@ from nltk.tokenize import word_tokenize
 from sklearn.metrics.pairwise import cosine_similarity
 import streamlit as st
 import nltk
-from nltk.tokenize import word_tokenize
-from nltk.data import find  # Import find function from nltk.data
+import ssl
 
-# Initialize NLTK resources with caching
-@st.cache_resource
-def setup_nltk():
-    try:
-        # Download required NLTK data
-        nltk.download('punkt', quiet=True)
-        nltk.download('stopwords', quiet=True)
-        nltk.download('wordnet', quiet=True)
-        
-        # Verify resources
-        find('tokenizers/punkt')
-        find('corpora/stopwords')
-        find('corpora/wordnet')
-        return True
-    except Exception as e:
-        st.error(f"Gagal menginisialisasi NLTK: {str(e)}")
-        return False
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
 
-# Panggil fungsi setup di awal
-if not setup_nltk():
-    st.stop()  # Hentikan aplikasi jika NLTK gagal diinisialisasi
+# Download NLTK data
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
+
+try:
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    nltk.download('stopwords
 
 # Styling function
 def add_styles():
