@@ -27,7 +27,7 @@ except LookupError:
 try:
     nltk.data.find('corpora/stopwords')
 except LookupError:
-    nltk.download('stopwords
+    nltk.download('stopwords')
 
 # Styling function
 def add_styles():
