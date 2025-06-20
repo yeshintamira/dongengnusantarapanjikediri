@@ -210,15 +210,14 @@ def add_styles():
             background-color: #218838 !important;
         }
         
-        /* Style untuk modal/popup - PERBAIKAN SCROLLBAR */
+        /* Style untuk modal/popup */
         .modal-content {
             background-color: white;
             padding: 20px;
             border-radius: 10px;
             margin-top: -50px;
+            overflow-y: auto;
             border: 2px solid #1a3e72;
-            max-height: 80vh;
-            overflow: hidden;
         }
         .modal-title {
             color: #1a3e72;
@@ -229,57 +228,43 @@ def add_styles():
             border-bottom: 2px solid #1a3e72;
             padding-bottom: 10px;
         }
-        
-        /* PERBAIKAN UTAMA UNTUK SCROLLBAR */
-        .modal-story {
+
+        /* Scrollbar untuk WebKit (Chrome, Safari) */
+           .modal-story::-webkit-scrollbar {
+            width: 8px;
+        }
+        .modal-story::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+        }
+        .modal-story::-webkit-scrollbar-thumb {
+        background: #1a3e72;
+        border-radius: 10px;
+        } .modal-story {
             color: #333333;
             font-size: 1.0em;
             line-height: 1.8;
             text-align: justify;
-            margin-top: 10px;
-            max-height: 50vh;
-            overflow-y: auto !important;
-            overflow-x: hidden;
+            margin-top: -10px;
+            max-height: 60vh;
+            overflow-y: auto;
             white-space: pre-line;
-            padding: 15px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            background-color: #fafafa;
-            
-            /* Pastikan scrollbar selalu muncul */
-            scrollbar-width: auto;
-            scrollbar-color: #1a3e72 #f1f1f1;
         }
         
-        /* Style scrollbar untuk Webkit browsers (Chrome, Safari, Edge) */
+        /* Style scrollbar untuk modal */
         .modal-story::-webkit-scrollbar {
-            width: 12px !important;
-            height: 12px !important;
+            width: 8px;
         }
-        
         .modal-story::-webkit-scrollbar-track {
-            background: #f1f1f1 !important;
-            border-radius: 10px !important;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .modal-story::-webkit-scrollbar-thumb {
-            background: #1a3e72 !important;
-            border-radius: 10px !important;
-            border: 2px solid #f1f1f1;
-        }
-        
-        .modal-story::-webkit-scrollbar-thumb:hover {
-            background: #0d2b57 !important;
-        }
-        
-        .modal-story::-webkit-scrollbar-corner {
             background: #f1f1f1;
+            border-radius: 10px;
         }
-        
-        /* Force scrollbar untuk Firefox */
-        .modal-story {
-            scrollbar-width: auto !important;
+        .modal-story::-webkit-scrollbar-thumb {
+            background: #1a3e72;
+            border-radius: 10px;
+        }
+        .modal-story::-webkit-scrollbar-thumb:hover {
+            background: #0d2b57;
         }
         
         /* Style untuk close button di modal */
@@ -295,20 +280,6 @@ def add_styles():
         }
         .close-button:hover {
             background-color: #c82333 !important;
-        }
-        
-        /* Additional fix untuk memastikan scrollbar terlihat di semua kondisi */
-        .modal-story-container {
-            position: relative;
-            max-height: 50vh;
-            overflow: hidden;
-        }
-        
-        .modal-story-scrollable {
-            height: 100%;
-            overflow-y: scroll !important;
-            padding-right: 15px;
-            margin-right: -15px;
         }
         </style>
         """,
@@ -612,7 +583,7 @@ def recommend_with_lsi(user_input, model_data):
         return []
 
 def show_full_story_modal(title, content, file_name, keywords=None):
-    """Menampilkan cerita lengkap dalam modal dengan scrollbar yang diperbaiki"""
+    """Menampilkan cerita lengkap dalam modal"""
     formatted_story = format_full_story(content, keywords)
     
     st.markdown("---")
@@ -625,7 +596,7 @@ def show_full_story_modal(title, content, file_name, keywords=None):
             <div style="text-align: center; margin-bottom: 15px; color: #666;">
                 📁 File: {file_name}
             </div>
-            <div class="modal-story">
+          <div class="modal-story" style="max-height: 300px; overflow-y: scroll;">
                 {formatted_story}
             </div>
         </div>
