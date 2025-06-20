@@ -12,6 +12,7 @@ import nltk
 nltk.download('punkt')
 nltk.download('stopwords')       # kalau pakai stopwords
 nltk.download('wordnet')         # kalau pakai lemmatizer
+nltk.download('omw-1.4')
 
 # Styling function
 def add_styles():
