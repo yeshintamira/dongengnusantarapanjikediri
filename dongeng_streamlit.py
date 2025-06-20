@@ -49,12 +49,27 @@ def add_styles():
             font-weight: bold;       
             font-family: 'Arial', sans-serif; 
         }
-        .subtitle {
-            font-size: 5px;          
-            color: #000000;          
-            margin-top: 10px;         
-            font-weight: normal;       
-        }
+    .subtitle {
+    font-size: 15px !important;          
+    color: #000000 !important;          
+    margin-top: 10px !important;         
+    font-weight: normal !important;
+    font-family: 'Arial', sans-serif !important;
+    line-height: 1.4 !important;
+}
+
+/* Fix khusus untuk Streamlit */
+.stApp .subtitle {
+    font-size: 15px !important;
+    transform: scale(1) !important;
+    -webkit-text-size-adjust: 100% !important;
+}
+
+/* Reset font di parent container */
+.stApp, .stMarkdown {
+    font-size: 16px !important;
+    font-family: 'Arial', sans-serif !important;
+}
         .stApp {
             background: #e6f0ff;
             font-family: Arial, sans-serif;
