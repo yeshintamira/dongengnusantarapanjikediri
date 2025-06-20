@@ -471,15 +471,20 @@ def recommend_with_lda(user_input, model_data):
         
         if combined_score >= min_similarity:
             content = model_data['data_test'][idx]
-            file_name = os.path.splitext(os.path.basename(model_data['file_paths_test'][idx]))[0]
+            full_path = model_data['file_paths_test'][idx]
             
-            # Gunakan nama file sebagai judul jika tidak ada judul eksplisit
+            # Ekstrak hanya nama file tanpa path folder
+            file_name = os.path.basename(full_path)
+            # Hapus ekstensi
+            file_name = os.path.splitext(file_name)[0]
+            
+            # Format judul (tanpa path folder)
             title = file_name.replace('_', ' ').title()
             
             results.append({
                 'title': title,
                 'content': content,
-                'file_name': file_name,
+                'file_name': file_name,  # Tetap simpan nama file untuk ditampilkan
                 'score': combined_score,
                 'topic_sim': topic_sim,
                 'keyword_sim': keyword_sim,
