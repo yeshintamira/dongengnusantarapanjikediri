@@ -640,6 +640,13 @@ def main():
         st.session_state['search_keywords'] = []
     
     add_styles()
+
+    def main():
+    import nltk
+    nltk.download('punkt')
+    nltk.download('stopwords')
+    nltk.download('wordnet')
+    nltk.download('omw-1.4')
     
     st.markdown(
         """
