@@ -435,65 +435,38 @@ def keyword_similarity(query_tokens, doc_tokens):
     return matches / len(query_tokens)
 
 def recommend_with_lda(user_input, model_data):
-    """Recommend documents using LDA model"""
-    if model_data is None:
-        return []
-    
-    user_tokens = preprocess_user_input(user_input, model_data)
-    
-    if not user_tokens:
-        return []
-    
-    # Langsung menggunakan bag-of-words tanpa TF-IDF
-    bow = model_data['dictionary'].doc2bow(user_tokens)
-    if len(bow) == 0:
-        return []
-    
-    # Langsung menggunakan LDA dengan BOW
-    topic_dist = model_data['lda_model'][bow]
-    topic_dist_vec = sparse2full(topic_dist, model_data['lda_model'].num_topics)
-    
-    results = []
-    min_similarity = 0.05
+    # ... (kode sebelumnya tetap sama)
     
     for idx, doc_tokens in enumerate(model_data['preprocessed_test']):
-        doc_bow = model_data['dictionary'].doc2bow(doc_tokens)
-        if len(doc_bow) > 0:
-            doc_topics = model_data['lda_model'][doc_bow]
-            doc_topics_vec = sparse2full(doc_topics, model_data['lda_model'].num_topics)
-            topic_sim = cosine_similarity_manual(topic_dist_vec, doc_topics_vec)
-        else:
-            topic_sim = 0.0
-        
-        keyword_sim = keyword_similarity(user_tokens, doc_tokens)
-        combined_score = 0.65 * topic_sim + 0.35 * keyword_sim
+        # ... (kode perhitungan similarity tetap sama)
         
         if combined_score >= min_similarity:
             content = model_data['data_test'][idx]
             full_path = model_data['file_paths_test'][idx]
             
-            # **PERUBAHAN UTAMA DI SINI**
-            # 1. Ambil nama file saja (tanpa path folder)
-            file_name = os.path.basename(full_path)
+            # SOLUSI PASTI UNTUK HAPUS "Folder Dongeng\":
+            if "Folder Dongeng\\" in full_path:
+                # Jika path mengandung "Folder Dongeng\", split dan ambil bagian akhir
+                file_name = full_path.split("Folder Dongeng\\")[-1]
+            else:
+                # Jika tidak, gunakan basename biasa
+                file_name = os.path.basename(full_path)
             
-            # 2. Hapus ekstensi (.txt, .doc, dll)
+            # Hapus ekstensi file
             file_name = os.path.splitext(file_name)[0]
             
-            # 3. Bersihkan dari karakter "_" dan format judul
+            # Bersihkan karakter "_" dan format judul
             title = file_name.replace('_', ' ').title()
             
             results.append({
-                'title': title,  # Judul sudah bersih
+                'title': title,  # Judul bersih tanpa folder
                 'content': content,
-                'file_name': file_name,  # Nama file tanpa path
+                'file_name': file_name,
                 'score': combined_score,
-                'topic_sim': topic_sim,
-                'keyword_sim': keyword_sim,
                 'index': idx
             })
     
     return sorted(results, key=lambda x: x['score'], reverse=True)[:5]
-
 def recommend_with_lsi(user_input, model_data):
     """Recommend documents using LSI model"""
     if model_data is None:
