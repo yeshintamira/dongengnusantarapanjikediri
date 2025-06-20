@@ -228,11 +228,15 @@ def add_styles():
             border-bottom: 2px solid #1a3e72;
             padding-bottom: 10px;
         }
-       .modal-story {
+      .modal-story {
     max-height: 60vh;
     overflow-y: auto;
-    padding-right: 10px;  /* Beri ruang untuk scrollbar */
-    scrollbar-width: thin;  /* Untuk browser modern */
+    padding-right: 10px;
+    color: #333333;
+    font-size: 1.0em;
+    line-height: 1.8;
+    text-align: justify;
+    white-space: pre-line;
 }
 
 /* Scrollbar untuk WebKit (Chrome, Safari) */
@@ -246,29 +250,10 @@ def add_styles():
 .modal-story::-webkit-scrollbar-thumb {
     background: #1a3e72;
     border-radius: 10px;
-} .modal-story {
-            color: #333333;
-            font-size: 1.0em;
-            line-height: 1.8;
-            text-align: justify;
-            margin-top: -10px;
-            max-height: 60vh;
-            overflow-y: auto;
-            white-space: pre-line;
-        }
-        
-        /* Style scrollbar untuk modal */
-        .modal-story::-webkit-scrollbar {
-            width: 8px;
-        }
-        .modal-story::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-        .modal-story::-webkit-scrollbar-thumb {
-            background: #1a3e72;
-            border-radius: 10px;
-        }
+}
+.modal-story::-webkit-scrollbar-thumb:hover {
+    background: #0d2b57;
+}
         .modal-story::-webkit-scrollbar-thumb:hover {
             background: #0d2b57;
         }
@@ -602,8 +587,13 @@ def show_full_story_modal(title, content, file_name, keywords=None):
             <div style="text-align: center; margin-bottom: 15px; color: #666;">
                 📁 File: {file_name}
             </div>
-          <div class="modal-story" style="max-height: 300px; overflow-y: scroll;">
+            <div class="modal-story">
                 {formatted_story}
+            </div>
+            <div style="margin-top: 20px;">
+                <button class="close-button" onclick="window.parent.document.querySelector('.stButton button').click()">
+                    ❌ Tutup Cerita
+                </button>
             </div>
         </div>
         """,
