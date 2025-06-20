@@ -228,7 +228,7 @@ def add_styles():
             border-bottom: 2px solid #1a3e72;
             padding-bottom: 10px;
         }
-   .modal-story {
+ .modal-story {
     /* Text styling */
     color: #333333;
     font-size: 1.0em;
@@ -241,18 +241,13 @@ def add_styles():
     overflow-y: auto;
     
     /* Scrollbar styling for all devices */
-    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
-    scrollbar-width: auto; /* For Firefox */
-    scrollbar-color: #1a3e72 #f1f1f1; /* For Firefox */
-    
-    /* Force scrollbar to always show on mobile */
-    overflow: -moz-scrollbars-vertical; 
-    overflow: scroll;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling iOS */
+    scrollbar-color: #1a3e72 #f1f1f1; /* Warna biru untuk Firefox mobile/desktop */
 }
 
 /* Scrollbar styling for WebKit browsers (Chrome, Safari, Edge) */
 .modal-story::-webkit-scrollbar {
-    width: 8px; /* Lebar lebih kecil untuk mobile */
+    width: 8px;
     height: 8px;
 }
 
@@ -266,20 +261,22 @@ def add_styles():
     border-radius: 10px;
 }
 
-.modal-story::-webkit-scrollbar-thumb:hover {
-    background: #0d2b57;
-}
-
 /* Mobile-specific adjustments */
-@media (max-width: 768px) {
+@media (hover: none) and (pointer: coarse) {
+    /* Target perangkat touchscreen (mobile) */
     .modal-story {
-        max-height: 50vh; /* Lebih kecil di mobile */
-        scrollbar-width: thin; /* Lebih tipis di mobile */
+        scrollbar-width: thin; /* Untuk Firefox mobile */
+        scrollbar-color: #1a3e72 #f1f1f1; /* Warna biru di Firefox mobile */
     }
     
     .modal-story::-webkit-scrollbar {
         width: 6px; /* Lebih tipis di mobile */
         height: 6px;
+    }
+    
+    /* Tambahkan ini untuk memastikan scrollbar terlihat di iOS */
+    .modal-story {
+        -webkit-appearance: none;
     }
 
         /* Style untuk close button di modal */
