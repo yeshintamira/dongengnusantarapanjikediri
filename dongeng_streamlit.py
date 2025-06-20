@@ -38,47 +38,37 @@ def add_styles():
     st.markdown(
         """
         <style>
-          .title-box {
-            background-color: #FFFFFF;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            color: #000000;
-            font-size: 30px;
-            font-weight: bold;
-            font-family: 'Arial', sans-serif;
+         .title-box {
+            background-color: #FFFFFF; 
+            padding: 20px;           
+            border-radius: 10px;      
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
+            text-align: center;       
+            color: #000000;            
+            font-size: 30px;          
+            font-weight: bold;       
+            font-family: 'Arial', sans-serif; 
         }
-        
-        /* Subtitle styling */
         .subtitle {
-            font-size: 15px;
-            color: #000000;
-            margin-top: 10px;
-            font-weight: normal;
+            font-size: 15px;          
+            color: #000000;          
+            margin-top: 10px;         
+            font-weight: normal;       
         }
-        
-        /* App background */
         .stApp {
             background: #e6f0ff;
             font-family: Arial, sans-serif;
         }
-        
-        /* Search container */
         .search-container {
             margin-top: 10px;
             margin-bottom: 10px;
         }
-        
-        /* Search label */
-        .search-label {
+         .search-label {
             color: #1a3e72;
             font-size: 16px;
             font-weight: bold;
-            margin-bottom: 2px;
+            margin-bottom: 2px !important;
         }
-        
-        /* Result box styling */
         .result-box {
             background-color: rgba(255, 255, 255, 0.9);
             padding: 20px;
@@ -88,8 +78,6 @@ def add_styles():
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             margin-top: -10px;
         }
-        
-        /* Result title */
         .result-title {
             color: #1a3e72;
             font-size: 1.3em;
@@ -98,8 +86,6 @@ def add_styles():
             display: flex;
             align-items: center;
         }
-        
-        /* Result preview text */
         .result-preview {
             color: #333333;
             font-size: 1.0em;
@@ -107,8 +93,6 @@ def add_styles():
             margin-bottom: 15px;
             text-align: justify;
         }
-        
-        /* Result metadata */
         .result-info {
             color: #666666;
             font-size: 0.85em;
@@ -117,104 +101,116 @@ def add_styles():
             margin-top: 10px;
         }
         
-        /* Keyword highlighting */
+        /* Styling untuk highlight kata kunci */
         .highlight-keyword {
-            background-color: #1a3e72;
-            color: white;
-            font-weight: bold;
-            padding: 2px 4px;
-            border-radius: 3px;
-            text-decoration: none;
+            background-color: #1a3e72 !important;
+            color: white !important;
+            font-weight: bold !important;
+            padding: 2px 4px !important;
+            border-radius: 3px !important;
+            text-decoration: none !important;
         }
         
-        /* Alert/warning boxes */
+        /* Updated Alert/Warning styling to match button colors */
         .stAlert {
-            background-color: #1a3e72;
-            border: 1px solid #1a3e72;
-            border-radius: 8px;
-            border-left: 4px solid #0d2b57;
-            color: white;
+            background-color: #1a3e72 !important;
+            border: 1px solid #1a3e72 !important;
+            border-radius: 8px !important;
+            border-left: 4px solid #0d2b57 !important;
+            color: white !important;
         }
         
         .stAlert > div {
-            color: white;
+            color: white !important;
         }
         
         .stAlert svg {
-            fill: white;
+            fill: white !important;
         }
         
         .stAlert:hover {
-            background-color: #0d2b57;
-            border-color: #0d2b57;
+            background-color: #0d2b57 !important;
+            border-color: #0d2b57 !important;
         }
         
-        /* Button styling */
-        button[kind="primary"], 
-        button[kind="secondary"] {
-            background-color: #1a3e72;
-            color: white;
-            border: none;
-            border-radius: 8px;
+        /* Specific styling for warning alerts */
+        div[data-testid="stAlert"] {
+            background-color: #1a3e72 !important;
+            border: 1px solid #1a3e72 !important;
+            color: white !important;
+        }
+        
+        div[data-testid="stAlert"] > div {
+            color: white !important;
+        }
+        
+        /* Alternative selector for alerts */
+        .element-container .stAlert {
+            background-color: #1a3e72 !important;
+            border-color: #1a3e72 !important;
+            color: white !important;
+        }
+        
+        button[kind="primary"], button[kind="secondary"] {
+            background-color: #1a3e72 !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 8px !important;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             margin-top: -10px;
         }
-        
-        button[kind="primary"]:hover, 
-        button[kind="secondary"]:hover {
-            background-color: #0d2b57;
+        button[kind="primary"]:hover, button[kind="secondary"]:hover {
+            background-color: #0d2b57 !important;
         }
-        
-        /* Text input styling */
         .stTextInput>div>div>input {
-            background-color: white;
-            color: #000000;
-            border: 1px solid #ced4da;
-            border-radius: 8px;
-            padding: 8px 12px;
-            width: 100%;
+            background-color: white !important;
+            color: #000000 !important;
+            border: 1px solid #ced4da !important;
+            border-radius: 8px !important;
+            padding: 8px 12px !important;
+            width: 100% !important;
         }
         
-        /* Input placeholder */
+        /* Placeholder text */
         .stTextInput>div>div>input::placeholder {
-            color: #6c757d;
-            opacity: 1;
+            color: #6c757d !important;
+            opacity: 1 !important;
         }
         
-        /* Input cursor */
+        /* Cursor color */
         .stTextInput>div>div>input {
-            caret-color: black;
+            caret-color: black !important;
         }
         
-        /* Input hover/focus states */
+        /* Hover state */
         .stTextInput>div>div>input:hover {
-            border-color: #1a3e72;
+            border-color: #1a3e72 !important;
         }
         
+        /* Focus state */
         .stTextInput>div>div>input:focus {
-            border-color: #1a3e72;
-            box-shadow: 0 0 0 2px rgba(26, 62, 114, 0.2);
+            border-color: #1a3e72 !important;
+            box-shadow: 0 0 0 2px rgba(26, 62, 114, 0.2) !important;
         }
         
-        /* Read more button */
+        /* Style untuk button baca lengkap */
         .read-button {
-            display: block;
-            width: 100%;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 8px 16px;
-            font-size: 0.9em;
-            margin-top: 0px;
-            text-align: center;
+            display: block !important;
+            width: 100% !important;
+            background-color: #28a745 !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 5px !important;
+            padding: 8px 16px !important;
+            font-size: 0.9em !important;
+            margin-top: 0px !important;
+            text-align: center !important;
         }
-        
         .read-button:hover {
-            background-color: #218838;
+            background-color: #218838 !important;
         }
         
-        /* Modal content */
+        /* Style untuk modal/popup */
         .modal-content {
             background-color: white;
             padding: 20px;
@@ -223,8 +219,6 @@ def add_styles():
             overflow-y: auto;
             border: 2px solid #1a3e72;
         }
-        
-        /* Modal title */
         .modal-title {
             color: #1a3e72;
             font-size: 1.5em;
@@ -235,52 +229,46 @@ def add_styles():
             padding-bottom: 10px;
         }
         
-        /* Story content in modal */
-        .modal-story {
-            max-height: 60vh;
-            overflow-y: auto;
-            padding-right: 10px;
+        } .modal-story {
             color: #333333;
             font-size: 1.0em;
             line-height: 1.8;
             text-align: justify;
             margin-top: -10px;
+            max-height: 60vh;
+            overflow-y: auto;
             white-space: pre-line;
         }
         
-        /* Scrollbar styling for modal */
+        /* Style scrollbar untuk modal */
         .modal-story::-webkit-scrollbar {
             width: 8px;
         }
-        
         .modal-story::-webkit-scrollbar-track {
             background: #f1f1f1;
             border-radius: 10px;
         }
-        
         .modal-story::-webkit-scrollbar-thumb {
             background: #1a3e72;
             border-radius: 10px;
         }
-        
         .modal-story::-webkit-scrollbar-thumb:hover {
             background: #0d2b57;
         }
         
-        /* Close button in modal */
+        /* Style untuk close button di modal */
         .close-button {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 20px;
-            font-size: 1.0em;
-            margin-top: 20px;
-            width: 100%;
+            background-color: #dc3545 !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 8px !important;
+            padding: 10px 20px !important;
+            font-size: 1.0em !important;
+            margin-top: 20px !important;
+            width: 100% !important;
         }
-        
         .close-button:hover {
-            background-color: #c82333;
+            background-color: #c82333 !important;
         }
         </style>
         """,
