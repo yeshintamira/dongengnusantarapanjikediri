@@ -5,6 +5,7 @@ import os
 import re
 import csv
 from gensim.matutils import sparse2full
+import nltk
 from nltk.tokenize import word_tokenize
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -12,22 +13,16 @@ from sklearn.metrics.pairwise import cosine_similarity
 def download_nltk_data():
     """Download data NLTK dengan caching untuk menghindari download berulang"""
     try:
-        nltk.data.find('tokenizers/punkt')
-        nltk.data.find('tokenizers/punkt_tab')
-    except LookupError:
-        nltk.download('punkt')
-        nltk.download('punkt_tab')
-    
-    # Download data NLTK lain yang sering dibutuhkan
-    try:
-        nltk.data.find('corpora/stopwords')
-    except LookupError:
-        nltk.download('stopwords')
-    
-    try:
-        nltk.data.find('tokenizers/punkt_tab/indonesian/')
-    except LookupError:
-        nltk.download('punkt_tab')
+        # Download required NLTK data
+        nltk.download('punkt', quiet=True)
+        nltk.download('punkt_tab', quiet=True)
+        nltk.download('stopwords', quiet=True)
+        
+        print("NLTK data downloaded successfully")
+        return True
+    except Exception as e:
+        print(f"Error downloading NLTK data: {e}")
+        return False
 
 # Panggil fungsi ini di awal aplikasi
 download_nltk_data()
@@ -289,14 +284,6 @@ def load_lda_model():
             try:
                 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
                 from nltk.corpus import stopwords
-                import nltk
-                
-                # Download NLTK data jika belum ada
-                try:
-                    stopwords.words('indonesian')
-                except LookupError:
-                    nltk.download('stopwords')
-                    nltk.download('punkt')
                 
                 # Load stopwords
                 stop_words_nltk = set(stopwords.words('indonesian'))
@@ -322,7 +309,7 @@ def load_lda_model():
         return model_data
         
     except FileNotFoundError:
-        st.error("File model LDA tidak ditemukan. Pastikan file 'lda.joblib' ada di folder 'model_lda/'")
+        st.error("File model LDA tidak ditemukan. Pastikan file 'lda.joblib' ada di folder 'model/'")
         return None
     except Exception as e:
         st.error(f"Terjadi kesalahan saat memuat model LDA: {str(e)}")
@@ -343,11 +330,22 @@ def load_lsi_model():
         return model_data
         
     except FileNotFoundError:
-        st.error("File model LSI tidak ditemukan. Pastikan file 'lsi_model.joblib' ada di direktori yang sama.")
+        st.error("File model LSI tidak ditemukan. Pastikan file 'lsi_model.joblib' ada di folder 'model/'.")
         return None
     except Exception as e:
         st.error(f"Terjadi kesalahan saat memuat model LSI: {str(e)}")
         return None
+
+def safe_tokenize(text):
+    """Safe tokenization with fallback for NLTK issues"""
+    try:
+        return word_tokenize(text)
+    except LookupError:
+        # Fallback to simple split if NLTK punkt is not available
+        return text.split()
+    except Exception as e:
+        print(f"Tokenization error: {e}")
+        return text.split()
 
 def preprocess_text(text, model_data):
     """Preprocess text for LDA model"""
@@ -355,7 +353,7 @@ def preprocess_text(text, model_data):
         return []
     text = text.lower()
     text = re.sub(r'[^a-z\s]', ' ', text)
-    tokens = word_tokenize(text)
+    tokens = safe_tokenize(text)
     filtered_tokens = [w for w in tokens if w not in model_data['stop_words'] and len(w) > 2]
     stemmed_tokens = [model_data['stemmer'].stem(w) for w in filtered_tokens]
     return stemmed_tokens
@@ -364,7 +362,7 @@ def preprocess_user_input(text, model_data):
     """Preprocess user input for LDA model"""
     tokens = preprocess_text(text, model_data)
     if not tokens:
-        simplified_tokens = [w.lower() for w in word_tokenize(text) if len(w) > 1 and w.isalpha()]
+        simplified_tokens = [w.lower() for w in safe_tokenize(text) if len(w) > 1 and w.isalpha()]
         tokens = simplified_tokens
     weighted_tokens = []
     for token in tokens:
@@ -377,7 +375,7 @@ def preprocess_lsi_query(text):
     # Basic preprocessing for LSI
     text = text.lower()
     text = re.sub(r'[^a-z\s]', ' ', text)
-    tokens = word_tokenize(text)
+    tokens = safe_tokenize(text)
     # Filter tokens with length > 2
     filtered_tokens = [w for w in tokens if len(w) > 2]
     return ' '.join(filtered_tokens)
@@ -385,7 +383,7 @@ def preprocess_lsi_query(text):
 def extract_search_keywords(user_input):
     """Ekstrak kata kunci untuk highlighting dari input user"""
     # Tokenize dan bersihkan input
-    words = word_tokenize(user_input.lower())
+    words = safe_tokenize(user_input.lower())
     # Filter kata-kata yang panjangnya > 2 dan hanya huruf
     keywords = [word for word in words if len(word) > 2 and word.isalpha()]
     return keywords
