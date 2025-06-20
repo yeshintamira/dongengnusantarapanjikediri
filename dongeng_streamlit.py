@@ -469,41 +469,23 @@ def recommend_with_lda(user_input, model_data):
         keyword_sim = keyword_similarity(user_tokens, doc_tokens)
         combined_score = 0.65 * topic_sim + 0.35 * keyword_sim
         
-       
-if combined_score >= min_similarity:
-    content = model_data['data_test'][idx]
-    full_path = model_data['file_paths_test'][idx]
+        if combined_score >= min_similarity:
+            content = model_data['data_test'][idx]
+            file_name = os.path.splitext(os.path.basename(model_data['file_paths_test'][idx]))[0]
+            
+            # Gunakan nama file sebagai judul jika tidak ada judul eksplisit
+            title = file_name.replace('_', ' ').title()
+            
+            results.append({
+                'title': title,
+                'content': content,
+                'file_name': file_name,
+                'score': combined_score,
+                'topic_sim': topic_sim,
+                'keyword_sim': keyword_sim,
+                'index': idx
+            })
     
-    # Debug: Lihat path asli
-    print(f"Original path: '{full_path}'")
-    
-    # Solusi 1: Split berdasarkan backslash untuk Windows path
-    if '\\' in full_path:
-        parts = full_path.split('\\')
-        file_name = parts[-1]  # Ambil bagian terakhir setelah backslash
-    elif '/' in full_path:
-        parts = full_path.split('/')
-        file_name = parts[-1]  # Ambil bagian terakhir setelah slash
-    else:
-        file_name = full_path
-    
-    # Hapus ekstensi
-    file_name = os.path.splitext(file_name)[0]
-    
-    print(f"Extracted filename: '{file_name}'")
-    
-    # Format judul
-    title = file_name.replace('_', ' ').title()
-    
-    results.append({
-        'title': title,
-        'content': content,
-        'file_name': file_name,
-        'score': combined_score,
-        'topic_sim': topic_sim,
-        'keyword_sim': keyword_sim,
-        'index': idx
-    })
     return sorted(results, key=lambda x: x['score'], reverse=True)[:5]
 
 def recommend_with_lsi(user_input, model_data):
