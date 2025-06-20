@@ -234,7 +234,6 @@ def add_styles():
     font-size: 1.0em;
     line-height: 1.8;
     text-align: justify;
-    white-space: pre-line;
     
     /* Layout */
     margin-top: -10px;
