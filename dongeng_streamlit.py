@@ -7,6 +7,13 @@ import csv
 from gensim.matutils import sparse2full
 from nltk.tokenize import word_tokenize
 from sklearn.metrics.pairwise import cosine_similarity
+import nltk
+from nltk.data import find
+
+try:
+    find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
 
 # Styling function
 def add_styles():
