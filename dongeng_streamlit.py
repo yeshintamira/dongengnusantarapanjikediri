@@ -10,15 +10,28 @@ from sklearn.metrics.pairwise import cosine_similarity
 import streamlit as st
 import nltk
 from nltk.tokenize import word_tokenize
-# import lainnya...
 
-# Cek & download resources NLTK yang dibutuhkan
-from nltk.data import find
-for resource in ['punkt', 'stopwords', 'wordnet']:
+# Initialize NLTK resources with caching
+@st.cache_resource
+def setup_nltk():
     try:
-        find(f'tokenizers/{resource}' if resource == 'punkt' else f'corpora/{resource}')
-    except LookupError:
-        nltk.download(resource)
+        # Download required NLTK data
+        nltk.download('punkt', quiet=True)
+        nltk.download('stopwords', quiet=True)
+        nltk.download('wordnet', quiet=True)
+        
+        # Verify resources
+        find('tokenizers/punkt')
+        find('corpora/stopwords')
+        find('corpora/wordnet')
+        return True
+    except Exception as e:
+        st.error(f"Gagal menginisialisasi NLTK: {str(e)}")
+        return False
+
+# Panggil fungsi setup di awal
+if not setup_nltk():
+    st.stop()  # Hentikan aplikasi jika NLTK gagal diinisialisasi
 # Styling function
 def add_styles():
     st.markdown(
