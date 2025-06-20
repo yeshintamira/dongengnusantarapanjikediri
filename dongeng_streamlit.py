@@ -756,6 +756,6 @@ def main():
     else:
         st.error("❌ Tidak ada model yang tersedia. Pastikan file model ada di direktori yang benar:")
         st.info("💡 Jika Anda menjalankan ini secara lokal, pastikan Anda telah menjalankan script pelatihan model terlebih dahulu")
- 
+
 if __name__ == "__main__":
     main()
