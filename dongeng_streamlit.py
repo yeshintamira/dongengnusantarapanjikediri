@@ -200,43 +200,42 @@ def add_styles():
             background-color: #218838 !important;
         }
         
-        /* FIXED SCROLLBAR STYLES */
-        .modal-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            border: 2px solid #1a3e72;
-        }
-        
+        /* UPDATED MODAL STYLES - NO BOX, BETTER SPACING */
         .modal-title {
             color: #1a3e72;
-            font-size: 1.5em;
+            font-size: 1.8em;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 30px;
             text-align: center;
             border-bottom: 2px solid #1a3e72;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
+        }
+        
+        .modal-file-info {
+            text-align: center; 
+            margin-bottom: 30px; 
+            color: #666;
+            font-size: 1.0em;
         }
         
         .modal-story {
             max-height: 60vh;
             overflow-y: auto;
-            padding: 15px;
-            margin: 10px 0;
+            padding: 20px 0;
+            margin: 0;
             color: #333333;
-            font-size: 1.0em;
+            font-size: 1.1em;
             line-height: 1.8;
             text-align: justify;
             white-space: pre-line;
-            background-color: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
+            background-color: transparent;
+            border: none;
             scrollbar-width: thin;
             scrollbar-color: #1a3e72 #f1f1f1;
         }
         
         .modal-story::-webkit-scrollbar {
-            width: 10px;
+            width: 12px;
         }
         
         .modal-story::-webkit-scrollbar-track {
@@ -251,20 +250,6 @@ def add_styles():
         
         .modal-story::-webkit-scrollbar-thumb:hover {
             background: #0d2b57;
-        }
-        
-        .close-button {
-            background-color: #dc3545 !important;
-            color: white !important;
-            border: none !important;
-            border-radius: 8px !important;
-            padding: 10px 20px !important;
-            font-size: 1.0em !important;
-            margin-top: 20px !important;
-            width: 100% !important;
-        }
-        .close-button:hover {
-            background-color: #c82333 !important;
         }
         </style>
         """,
@@ -540,27 +525,20 @@ def recommend_with_lsi(user_input, model_data):
         return []
 
 def show_full_story_modal(title, content, file_name, keywords=None):
-    """Menampilkan modal cerita lengkap dengan scrollbar"""
+    """Menampilkan cerita lengkap tanpa kotak dengan spacing yang lebih baik"""
     formatted_story = format_full_story(content, keywords)
     
     st.markdown("---")
     st.markdown(
         f"""
-        <div class="modal-content">
-            <div class="modal-title">
-                📖 {title}
-            </div>
-            <div style="text-align: center; margin-bottom: 15px; color: #666;">
-                📁 File: {file_name}
-            </div>
-            <div class="modal-story">
-                {formatted_story}
-            </div>
-            <div style="margin-top: 20px;">
-                <button class="close-button" onclick="window.parent.document.querySelector('.stButton button').click()">
-                    ❌ Tutup Cerita
-                </button>
-            </div>
+        <div class="modal-title">
+            📖 {title}
+        </div>
+        <div class="modal-file-info">
+            📁 File: {file_name}
+        </div>
+        <div class="modal-story">
+            {formatted_story}
         </div>
         """,
         unsafe_allow_html=True
@@ -655,10 +633,12 @@ def main():
         search_keywords = st.session_state.get('search_keywords', [])
         show_full_story_modal(story_data['title'], story_data['content'], story_data['file_name'], search_keywords)
         
+        # Simple back button
+        st.markdown("<br><br>", unsafe_allow_html=True)
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
-            if st.button("❌ Tutup Cerita", 
-                       key="close_story_main",
+            if st.button("🔙 Kembali ke Pencarian", 
+                       key="back_to_search",
                        type="secondary", 
                        use_container_width=True):
                 st.session_state['show_story'] = False
