@@ -492,11 +492,8 @@ def recommend_with_lda(user_input, model_data):
         combined_score = 0.65 * topic_sim + 0.35 * keyword_sim
         
       if combined_score >= min_similarity:
-        # Get document info
-        content = model_data['documents'][idx]
-        file_name = model_data['file_names'][idx]
-        title = model_data.get('titles', [file_name.replace('_', ' ').title()])[idx] if idx < len(model_data.get('titles', [])) else file_name.replace('_', ' ').title()
-        # Simpan hasil ke dalam daftar
+       full_path = model_data['file_names'][idx]
+file_name = os.path.splitext(os.path.basename(full_path))[0]
         results.append({
             'title': title,
             'content': content,
