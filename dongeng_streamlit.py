@@ -469,25 +469,33 @@ def recommend_with_lda(user_input, model_data):
         keyword_sim = keyword_similarity(user_tokens, doc_tokens)
         combined_score = 0.65 * topic_sim + 0.35 * keyword_sim
         
-        if combined_score >= min_similarity:
-            content = model_data['data_test'][idx]
-            full_path = model_data['file_paths_test'][idx]
+       
+if combined_score >= min_similarity:
+    content = model_data['data_test'][idx]
+    full_path = model_data['file_paths_test'][idx]
     
-        # Ekstrak nama file dari path
-        if '/' in full_path:
-        file_name = full_path.split('/')[-1]
-        elif '\\' in full_path:
-        file_name = full_path.split('\\')[-1]
-        else:
+    # Debug: Lihat path asli
+    print(f"Original path: '{full_path}'")
+    
+    # Solusi 1: Split berdasarkan backslash untuk Windows path
+    if '\\' in full_path:
+        parts = full_path.split('\\')
+        file_name = parts[-1]  # Ambil bagian terakhir setelah backslash
+    elif '/' in full_path:
+        parts = full_path.split('/')
+        file_name = parts[-1]  # Ambil bagian terakhir setelah slash
+    else:
         file_name = full_path
     
-        # Hapus ekstensi
-        file_name = os.path.splitext(file_name)[0]
+    # Hapus ekstensi
+    file_name = os.path.splitext(file_name)[0]
     
-        # Format judul
-        title = file_name.replace('_', ' ').title()
+    print(f"Extracted filename: '{file_name}'")
     
-        results.append({
+    # Format judul
+    title = file_name.replace('_', ' ').title()
+    
+    results.append({
         'title': title,
         'content': content,
         'file_name': file_name,
@@ -496,7 +504,6 @@ def recommend_with_lda(user_input, model_data):
         'keyword_sim': keyword_sim,
         'index': idx
     })
-    
     return sorted(results, key=lambda x: x['score'], reverse=True)[:5]
 
 def recommend_with_lsi(user_input, model_data):
