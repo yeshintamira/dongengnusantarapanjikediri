@@ -6,4 +6,4 @@ scikit-learn
 gensim
 joblib
 Sastrawi
-scipy
+scipy==1.10.1
