@@ -8,30 +8,29 @@ from gensim.matutils import sparse2full
 from nltk.tokenize import word_tokenize
 from sklearn.metrics.pairwise import cosine_similarity
 
-# Download NLTK data at the very beginning, before any other imports or functions
-import nltk
-try:
-    nltk.data.find('tokenizers/punkt')
-except LookupError:
-    nltk.download('punkt')
+@st.cache_resource
+def download_nltk_data():
+    """Download data NLTK dengan caching untuk menghindari download berulang"""
+    try:
+        nltk.data.find('tokenizers/punkt')
+        nltk.data.find('tokenizers/punkt_tab')
+    except LookupError:
+        nltk.download('punkt')
+        nltk.download('punkt_tab')
     
-try:
-    nltk.data.find('corpora/stopwords')
-except LookupError:
-    nltk.download('stopwords')
+    # Download data NLTK lain yang sering dibutuhkan
+    try:
+        nltk.data.find('corpora/stopwords')
+    except LookupError:
+        nltk.download('stopwords')
     
-try:
-    nltk.data.find('corpora/wordnet')
-except LookupError:
-    nltk.download('wordnet')
-    
-try:
-    nltk.data.find('corpora/omw-1.4')
-except LookupError:
-    nltk.download('omw-1.4')
+    try:
+        nltk.data.find('tokenizers/punkt_tab/indonesian/')
+    except LookupError:
+        nltk.download('punkt_tab')
 
-# Now import word_tokenize after ensuring punkt is downloaded
-from nltk.tokenize import word_tokenize
+# Panggil fungsi ini di awal aplikasi
+download_nltk_data()
 
 # Styling function
 def add_styles():
