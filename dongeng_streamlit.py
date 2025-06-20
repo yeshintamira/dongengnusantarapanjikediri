@@ -228,55 +228,60 @@ def add_styles():
             border-bottom: 2px solid #1a3e72;
             padding-bottom: 10px;
         }
- .modal-story {
+.modal-story {
     /* Text styling */
     color: #333333;
     font-size: 1.0em;
     line-height: 1.8;
     text-align: justify;
     
-    /* Layout */
+    /* Layout dengan jarak dari scrollbar */
     margin-top: -10px;
     max-height: 60vh;
     overflow-y: auto;
+    padding-right: 15px; /* Tambahkan padding untuk jarak */
+    box-sizing: border-box; /* Pastikan padding tidak mempengaruhi lebar total */
     
-    /* Scrollbar styling for all devices */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling iOS */
-    scrollbar-color: #1a3e72 #f1f1f1; /* Warna biru untuk Firefox mobile/desktop */
+    /* Scrollbar styling */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-color: #1a3e72 #f1f1f1;
 }
 
-/* Scrollbar styling for WebKit browsers (Chrome, Safari, Edge) */
+/* Scrollbar styling - Beri jarak dari tepi container */
 .modal-story::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 10px; /* Lebar scrollbar diperbesar */
+    height: 10px;
+    margin-left: 5px; /* Jarak dari konten */
 }
 
 .modal-story::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 10px;
+    margin: 5px 0; /* Jarak vertikal */
 }
 
 .modal-story::-webkit-scrollbar-thumb {
     background: #1a3e72;
     border-radius: 10px;
+    border: 2px solid transparent; /* Transparent border */
+    background-clip: content-box; /* Agar background tidak masuk ke area border */
 }
 
-/* Mobile-specific adjustments */
+/* Mobile adjustments */
 @media (hover: none) and (pointer: coarse) {
-    /* Target perangkat touchscreen (mobile) */
     .modal-story {
-        scrollbar-width: thin; /* Untuk Firefox mobile */
-        scrollbar-color: #1a3e72 #f1f1f1; /* Warna biru di Firefox mobile */
+        padding-right: 12px; /* Sedikit lebih kecil di mobile */
+        scrollbar-width: thin;
     }
     
     .modal-story::-webkit-scrollbar {
-        width: 6px; /* Lebih tipis di mobile */
-        height: 6px;
+        width: 8px;
+        height: 8px;
+        margin-left: 3px;
     }
     
-    /* Tambahkan ini untuk memastikan scrollbar terlihat di iOS */
-    .modal-story {
-        -webkit-appearance: none;
+    .modal-story::-webkit-scrollbar-thumb {
+        border: 1px solid transparent;
     }
 
         /* Style untuk close button di modal */
