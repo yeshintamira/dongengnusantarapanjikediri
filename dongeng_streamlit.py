@@ -228,51 +228,41 @@ def add_styles():
             border-bottom: 2px solid #1a3e72;
             padding-bottom: 10px;
         }
-       .modal-story {
+      .modal-story {
+    /* Text styling */
+    color: #333333;
+    font-size: 1.0em;
+    line-height: 1.8;
+    text-align: justify;
+    white-space: pre-line;
+    
+    /* Layout */
+    margin-top: -10px;
     max-height: 60vh;
     overflow-y: auto;
     
-    scrollbar-width: thin;  /* Untuk browser modern */
+    /* Scrollbar for modern browsers */
+    scrollbar-width: thin;
 }
 
-/* Scrollbar untuk WebKit (Chrome, Safari) */
+/* Scrollbar styling for WebKit browsers (Chrome, Safari, Edge) */
 .modal-story::-webkit-scrollbar {
     width: 8px;
 }
+
 .modal-story::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 10px;
 }
+
 .modal-story::-webkit-scrollbar-thumb {
     background: #1a3e72;
     border-radius: 10px;
-} .modal-story {
-            color: #333333;
-            font-size: 1.0em;
-            line-height: 1.8;
-            text-align: justify;
-            margin-top: -10px;
-            max-height: 60vh;
-            overflow-y: auto;
-            white-space: pre-line;
-        }
-        
-        /* Style scrollbar untuk modal */
-        .modal-story::-webkit-scrollbar {
-            width: 8px;
-        }
-        .modal-story::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-        .modal-story::-webkit-scrollbar-thumb {
-            background: #1a3e72;
-            border-radius: 10px;
-        }
-        .modal-story::-webkit-scrollbar-thumb:hover {
-            background: #0d2b57;
-        }
-        
+}
+
+.modal-story::-webkit-scrollbar-thumb:hover {
+    background: #0d2b57;
+}
         /* Style untuk close button di modal */
         .close-button {
             background-color: #dc3545 !important;
