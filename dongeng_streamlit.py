@@ -755,8 +755,6 @@ def main():
                 
     else:
         st.error("❌ Tidak ada model yang tersedia. Pastikan file model ada di direktori yang benar:")
-        st.info("• Model LDA: 'model/lda.joblib'")
-        st.info("• Model LSI: 'model/lsi_model.joblib'")
         st.info("💡 Jika Anda menjalankan ini secara lokal, pastikan Anda telah menjalankan script pelatihan model terlebih dahulu")
 
 if __name__ == "__main__":
