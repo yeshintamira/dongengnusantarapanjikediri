@@ -228,36 +228,23 @@ def add_styles():
             border-bottom: 2px solid #1a3e72;
             padding-bottom: 10px;
         }
-       .modal-story {
-    max-height: 60vh;
-    overflow-y: auto;
-    padding-right: 10px;  /* Beri ruang untuk scrollbar */
-    scrollbar-width: thin;  /* Untuk browser modern */
-}
-
-/* Scrollbar untuk WebKit (Chrome, Safari) */
-.modal-story::-webkit-scrollbar {
-    width: 8px;
-}
-.modal-story::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-}
-.modal-story::-webkit-scrollbar-thumb {
-    background: #1a3e72;
-    border-radius: 10px;
-} .modal-story {
+        .modal-story {
+            max-height: 60vh;
+            overflow-y: auto;
+            padding: 10px;
+            margin: 10px 0;
             color: #333333;
             font-size: 1.0em;
             line-height: 1.8;
             text-align: justify;
-            margin-top: -10px;
-            max-height: 60vh;
-            overflow-y: auto;
             white-space: pre-line;
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            scrollbar-width: thin;
         }
-        
-        /* Style scrollbar untuk modal */
+
+        /* Scrollbar untuk WebKit (Chrome, Safari) */
         .modal-story::-webkit-scrollbar {
             width: 8px;
         }
@@ -449,9 +436,12 @@ def create_preview(content, max_length=300, keywords=None):
 
 def format_full_story(content, keywords=None):
     """Format cerita lengkap untuk tampilan yang lebih baik"""
-    # Bersihkan spasi berlebih tapi pertahankan semua konten
-    cleaned_content = re.sub(r'[ \t]+', ' ', content.strip())
-    # Pertahankan semua paragraf
+    # Bersihkan konten secara menyeluruh
+    cleaned_content = re.sub(r'[^\w\s.,!?\'"-]', ' ', content)  # Hapus karakter khusus
+    cleaned_content = re.sub(r'\s+', ' ', cleaned_content)  # Normalisasi spasi
+    cleaned_content = cleaned_content.strip()
+    
+    # Pertahankan paragraf asli
     paragraphs = [p.strip() for p in cleaned_content.split('\n') if p.strip()]
     formatted_content = '\n\n'.join(paragraphs)
     
@@ -602,8 +592,13 @@ def show_full_story_modal(title, content, file_name, keywords=None):
             <div style="text-align: center; margin-bottom: 15px; color: #666;">
                 📁 File: {file_name}
             </div>
-          <div class="modal-story" style="max-height: 300px; overflow-y: scroll;">
+            <div class="modal-story">
                 {formatted_story}
+            </div>
+            <div style="margin-top: 20px;">
+                <button class="close-button" onclick="window.parent.document.querySelector('.stButton button').click()">
+                    ❌ Tutup Cerita
+                </button>
             </div>
         </div>
         """,
