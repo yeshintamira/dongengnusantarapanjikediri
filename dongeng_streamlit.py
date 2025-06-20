@@ -1,4 +1,9 @@
 import streamlit as st
+st.set_page_config(
+    page_title="Dongeng Nusantara Panji Kediri",
+    page_icon="📚",
+    layout="wide"
+)
 import joblib
 import numpy as np
 import os
