@@ -53,7 +53,7 @@ def add_styles():
     font-size: 15px !important;          
     color: #000000 !important;          
     margin-top: 10px !important;  
-    margin-bottom: -5px;
+    margin-bottom: 10px;
     font-weight: normal !important;
     font-family: 'Arial', sans-serif !important;
     line-height: 1.4 !important;
