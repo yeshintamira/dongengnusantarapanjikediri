@@ -235,53 +235,52 @@ def add_styles():
     line-height: 1.8;
     text-align: justify;
     
-    /* Layout dengan jarak dari scrollbar */
+    /* Layout dengan padding simetris */
     margin-top: -10px;
     max-height: 60vh;
     overflow-y: auto;
-    padding-right: 15px; /* Tambahkan padding untuk jarak */
-    box-sizing: border-box; /* Pastikan padding tidak mempengaruhi lebar total */
+    padding: 0 20px; /* Jarak kiri-kanan sama */
+    box-sizing: border-box;
     
     /* Scrollbar styling */
+    scrollbar-gutter: stable; /* Ruang khusus scrollbar */
     -webkit-overflow-scrolling: touch;
     scrollbar-color: #1a3e72 #f1f1f1;
 }
 
-/* Scrollbar styling - Beri jarak dari tepi container */
+/* Scrollbar styling */
 .modal-story::-webkit-scrollbar {
-    width: 10px; /* Lebar scrollbar diperbesar */
+    width: 10px;
     height: 10px;
-    margin-left: 5px; /* Jarak dari konten */
 }
 
 .modal-story::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 10px;
-    margin: 5px 0; /* Jarak vertikal */
+    margin: 5px 0;
 }
 
 .modal-story::-webkit-scrollbar-thumb {
     background: #1a3e72;
     border-radius: 10px;
-    border: 2px solid transparent; /* Transparent border */
-    background-clip: content-box; /* Agar background tidak masuk ke area border */
+    border: 2px solid rgba(241, 241, 241, 0.5);
+    background-clip: content-box;
 }
 
 /* Mobile adjustments */
 @media (hover: none) and (pointer: coarse) {
     .modal-story {
-        padding-right: 12px; /* Sedikit lebih kecil di mobile */
+        padding: 0 15px; /* Sedikit lebih rapat di mobile */
         scrollbar-width: thin;
     }
     
     .modal-story::-webkit-scrollbar {
         width: 8px;
         height: 8px;
-        margin-left: 3px;
     }
     
     .modal-story::-webkit-scrollbar-thumb {
-        border: 1px solid transparent;
+        border: 1px solid rgba(241, 241, 241, 0.5);
     }
 
         /* Style untuk close button di modal */
