@@ -584,7 +584,7 @@ def show_full_story_modal(title, content, file_name, keywords=None):
             <div style="text-align: center; margin-bottom: 15px; color: #666;">
                 📁 File: {file_name}
             </div>
-            <div class="modal-story">
+            <div class="modal-story" style="max-height: 300px; overflow-y: auto;">
                 {formatted_story}
             </div>
         </div>
