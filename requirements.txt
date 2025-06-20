@@ -1,7 +1,7 @@
 streamlit
 pandas
 numpy
-nltk>=3.8
+nltk==3.8.1
 scikit-learn
 gensim
 joblib
