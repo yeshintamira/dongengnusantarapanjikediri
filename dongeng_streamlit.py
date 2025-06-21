@@ -538,7 +538,6 @@ def recommend_with_lda(user_input, model_data):
             content = model_data['data_test'][idx]
             full_path = model_data['file_paths_test'][idx]
             
-            # SOLUSI PASTI: Hapus semua path folder dan ekstensi
             # 1. Ambil nama file terakhir (handle both / and \ separators)
             file_name = os.path.basename(full_path.replace("\\", "/"))
             # 2. Hapus ekstensi file
