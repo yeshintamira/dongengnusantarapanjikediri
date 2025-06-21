@@ -643,9 +643,9 @@ def display_results(results, method_name, search_keywords=None):
             content = result['content']
             file_name = result['file_name']
             
-             # Highlight keywords hanya untuk LDA
+         # Highlight keywords hanya untuk LDA
             if method_name == "LDA" and search_keywords:
-                highlighted_title = highlight_keywords_in_text(search_keywords)
+                highlighted_title = highlight_keywords_in_text(title, search_keywords)
                 preview = create_preview(content, 300, search_keywords)
             else:
                 highlighted_title = title
