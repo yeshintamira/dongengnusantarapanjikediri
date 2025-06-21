@@ -643,13 +643,13 @@ def display_results(results, method_name, search_keywords=None):
             content = result['content']
             file_name = result['file_name']
             
-           # Highlight keywords hanya untuk LDA (di preview/isi saja)
-if method_name == "LDA" and search_keywords:
-    highlighted_title = title  # Judul tetap normal
-    preview = create_preview(content, 300, search_keywords)  # Hanya highlight di preview
-else:
-    highlighted_title = title
-    preview = create_preview(content, 300)
+             # Highlight keywords hanya untuk LDA
+            if method_name == "LDA" and search_keywords:
+                highlighted_title = highlight_keywords_in_text(search_keywords)
+                preview = create_preview(content, 300, search_keywords)
+            else:
+                highlighted_title = title
+                preview = create_preview(content, 300)
             
             # Container untuk setiap hasil
             with st.container():
